@@ -119,7 +119,7 @@ imagettftext($image, $text_size, 0, $textX, $textY, $text_color, $text_font, $te
 
 $textX = 10;
 $textY = $image_hight - 20;
-$text = "更新时间(UTC+8) " . date('Y-m-d H:i:s');
+$text = "更新时间 " . date('Y-m-d H:i:s');
 imagettftext($image, $text_size, 0, $textX, $textY, $text_color, $text_font, $text);
 
 $textX = $image_width - 200;
