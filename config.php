@@ -1,42 +1,33 @@
 <?php
-if ($run_in_phpfile === true ) {
-// 图片基本属性
-$image_width = 800;
-$image_hight = 600;
 
-// 文本参数与排版设置
-$text_size = "20";
+// oauth2客户端ID和密钥
+// 可以在 https://osu.ppy.sh/home/account/edit#oauth 获得
+// 请妥善保管不要让别人知道
+define("OSU_OAUTH2_CLIENT_ID", "");
+define("OSU_OAUTH2_CLIENT_SECRET","");
 
-// 需要一个字体绘制图片，填写完整路径
-$text_font = "";
-$Leading = 30;
-$zone_a_X = 400;
-$zone_c_X = 190;
-$zone_d_X = 400;
+// 如果查询时不指定用户，则使用这里配置的默认用户
+define("OSU_DEFAULT_USER","Murasame_sama");
+define("OSU_DEFAULT_USER_ONLY", false);
 
+// 如果不是为私服搭建就不需要修改
+define("OSU_API_EDNPOINT","https://osu.ppy.sh/api/v2");
+define("OSU_OAUTH2_TOKEN_ENDPOINT","https://osu.ppy.sh/oauth/token");
 
-// osu设置
-//
-// 这里填写你的legacy API密钥
-$osu_apikey = "";
-
-$osu_apiserver = "https://osu.ppy.sh/api";
-$osu_avatarserver = "https://a.ppy.sh";
-$osu_b_server = "https://b.ppy.sh/thumb";
-$osu_default_user = "Murasame_sama";
-$osu_default_user_only = false;
-$osu_default_mode = 0;
-
-$osu_mode = "0";
+// 绘制图片的相关设置
+define("IMAGE_TEXT_DEFAULT_FONT", dirname(__FILE__) . DIRECTORY_SEPARATOR . "fonts" . DIRECTORY_SEPARATOR . "SourceHanSansCN-Heavy.otf");
+define("IMAGE_TEXT_DEFAULT_FONT_SIZE", 20);
+define("IMAGE_TEXT_LEADING", 30);
 
 // 禁用所有错误报告
-error_reporting(0);
+// 当你调试完毕确认无错误时取消注释下面这行，防止意外产生的错误弹出隐私数据
+//error_reporting(0);
+
 
 // 设置默认时区
 date_default_timezone_set('Asia/Shanghai');
 
-} else {
-	header("HTTP/1.0 400 Bad Request");
-}
+// 默认缓存目录将使用php默认目录
+$sys_cache_path = sys_get_temp_dir();
 ?>
 
