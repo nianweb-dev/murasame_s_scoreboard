@@ -30,8 +30,19 @@ $data = make_req("/users/" . $user);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="res/css/mdui.css">
-  <script src="res/js/mdui.js"></script>
+  <!-- MDUI CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"
+  integrity="sha384-cLRrMq39HOZdvE0j6yBojO4+1PrHfB7a9l5qLcmRm/fiWXYY+CndJPmyu5FV/9Tw"
+  crossorigin="anonymous"
+/>
+<!-- MDUI JavaScript -->
+<script
+  src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"
+  integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
+  crossorigin="anonymous"
+></script>
   <title><?php print($data["username"] . "的详细信息"); ?></title>
 </head>
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
