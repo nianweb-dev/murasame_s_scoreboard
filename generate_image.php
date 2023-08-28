@@ -5,16 +5,6 @@ ob_start();
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "script" . DIRECTORY_SEPARATOR . "preload.php";
 ob_end_clean();
 
-// 取得用户数据
-
-if(isset($_GET['user']) && !empty($_GET['user'])) {
-    $user = input_filter($_GET['user']);
-} else {
-    $user = OSU_DEFAULT_USER;
-}
-
-$data = make_req("/users/" . $user);
-
 $Leading = IMAGE_TEXT_LEADING;
 
 // 对图像微调
@@ -41,7 +31,7 @@ imagefill($image, 0, 0, $transparent);
 
 // 从远程加载并绘制头像
 // 下载图片
-$avatar_data = file_get_contents($data["avatar_url"]);
+$avatar_data = file_get_contents($user_data["avatar_url"]);
 
 // 加载图片
 $avatar = imagecreatefromstring($avatar_data);
@@ -72,63 +62,63 @@ $text_color = imagecolorallocate($image, 255, 255, 255);
 $textX = $zone_a_X;
 
 $textY = $Leading;
-$text = "用户名:" . $data["username"];
+$text = "用户名:" . $user_data["username"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "全球排名:" . $data["statistics"]["global_rank"];
+$text = "全球排名:" . $user_data["statistics"]["global_rank"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "地区排名:" . $data["statistics"]["country_rank"];
+$text = "地区排名:" . $user_data["statistics"]["country_rank"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "PP:" . $data["statistics"]["pp"];
+$text = "PP:" . $user_data["statistics"]["pp"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "上榜总分:" . $data["statistics"]["ranked_score"];
+$text = "上榜总分:" . $user_data["statistics"]["ranked_score"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "完整总分:" . $data["statistics"]["total_score"];
+$text = "完整总分:" . $user_data["statistics"]["total_score"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "精准度:" . $data["statistics"]["hit_accuracy"] . "%";
+$text = "精准度:" . $user_data["statistics"]["hit_accuracy"] . "%";
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "游玩次数:" . $data["statistics"]["play_count"];
+$text = "游玩次数:" . $user_data["statistics"]["play_count"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 
 $textY = $textY + $Leading;
-$text = "银SS:" . $data["statistics"]["grade_counts"]["ssh"];
+$text = "银SS:" . $user_data["statistics"]["grade_counts"]["ssh"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textX = $zone_a_X + 200;
-$text = "金SS:" . $data["statistics"]["grade_counts"]["ss"];
+$text = "金SS:" . $user_data["statistics"]["grade_counts"]["ss"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textX = $zone_a_X;
 $textY = $textY + $Leading;
-$text = "银S:" . $data["statistics"]["grade_counts"]["sh"];
+$text = "银S:" . $user_data["statistics"]["grade_counts"]["sh"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textX = $zone_a_X + 200;
-$text = "金S:" . $data["statistics"]["grade_counts"]["s"];
+$text = "金S:" . $user_data["statistics"]["grade_counts"]["s"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 $textY = $textY + $Leading;
-$text = "A:" . $data["statistics"]["grade_counts"]["a"];
+$text = "A:" . $user_data["statistics"]["grade_counts"]["a"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 
 $textX = $zone_a_X;
 $textY = $textY + $Leading;
-$text = "注册时间:" . convert_timezone($data["join_date"]);
+$text = "注册时间:" . convert_timezone($user_data["join_date"]);
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 // Free zone
@@ -140,12 +130,12 @@ imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_colo
 
 $textX = $image_width - 200;
 $textY = $image_hight - 20;
-$text = "UID:" . $data["id"];
+$text = "UID:" . $user_data["id"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 // 最近游玩数据
 
-$recent_data = make_req("/users/" . $data["id"] . "/scores/recent?limit=1");
+$recent_data = make_req("/users/" . $user_data["id"] . "/scores/recent?limit=1");
 
 if (empty($recent_data)) {
     $textX = 270;

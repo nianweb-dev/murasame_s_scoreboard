@@ -17,13 +17,6 @@ function item($object,$value,$type="text",$prefix="",$suffix="") {
 		}
 }
 
-if(isset($_GET['user']) && !empty($_GET['user'])) {
-    $user = input_filter($_GET['user']);
-} else {
-    $user = OSU_DEFAULT_USER;
-}
-
-$data = make_req("/users/" . $user);
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -43,7 +36,7 @@ $data = make_req("/users/" . $user);
   integrity="sha384-gCMZcshYKOGRX9r6wbDrvF+TcCCswSHFucUzUPwka+Gr+uHgjlYvkABr95TCOz3A"
   crossorigin="anonymous"
 ></script>
-  <title><?php print($data["username"] . "的详细信息"); ?></title>
+  <title><?php print($user_data["username"] . "的详细信息"); ?></title>
 </head>
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
 
@@ -58,18 +51,18 @@ $data = make_req("/users/" . $user);
       </thead>
       <tbody>
 	<?php 
-		item("用户名",$data["username"]);
-		item("用户id",$data["id"]);
-		item("pp",$data["statistics"]["pp"],"text","","pp");
-		item("pp_exp",$data["statistics"]["pp_exp"],"text","","pp");
-		item("入榜总分",$data["statistics"]["ranked_score"]);
-		item("总计总分",$data["statistics"]["total_score"]);
-		item("总命中次数",$data["statistics"]["total_hits"]);
-		item("最大连击",$data["statistics"]["maximum_combo"]);
-		item("准确率",$data["statistics"]["hit_accuracy"],"text","","%");
-		item("注册时间",convert_timezone($data["join_date"]));
-		item("最后在线",convert_timezone($data["last_visit"]));
-		item("网站",$data["website"],"url")
+		item("用户名",$user_data["username"]);
+		item("用户id",$user_data["id"]);
+		item("pp",$user_data["statistics"]["pp"],"text","","pp");
+		item("pp_exp",$user_data["statistics"]["pp_exp"],"text","","pp");
+		item("入榜总分",$user_data["statistics"]["ranked_score"]);
+		item("总计总分",$user_data["statistics"]["total_score"]);
+		item("总命中次数",$user_data["statistics"]["total_hits"]);
+		item("最大连击",$user_data["statistics"]["maximum_combo"]);
+		item("准确率",$user_data["statistics"]["hit_accuracy"],"text","","%");
+		item("注册时间",convert_timezone($user_data["join_date"]));
+		item("最后在线",convert_timezone($user_data["last_visit"]));
+		item("网站",$user_data["website"],"url")
 
 
 	?>
@@ -84,14 +77,14 @@ $data = make_req("/users/" . $user);
      <tbody>
 
 	<?php
-		item("成为过supporter",$data["has_supported"]);
-		item("最大好友数",$data["max_friends"]);
-	//	item("个人页面(原始数据)",$data["page"]["raw"]);
-		item('总计打出"300"的个数',$data["statistics"]["count_300"]);
-		item('总计打出"100"的个数',$data["statistics"]["count_100"]);
-		item('总计打出"50"的个数',$data["statistics"]["count_50"]);
-		item('总计打出"miss"的个数',$data["statistics"]["count_miss"]);
-		item("supporter等级",$data["support_level"]);
+		item("成为过supporter",$user_data["has_supported"]);
+		item("最大好友数",$user_data["max_friends"]);
+	//	item("个人页面(原始数据)",$user_data["page"]["raw"]);
+		item('总计打出"300"的个数',$user_data["statistics"]["count_300"]);
+		item('总计打出"100"的个数',$user_data["statistics"]["count_100"]);
+		item('总计打出"50"的个数',$user_data["statistics"]["count_50"]);
+		item('总计打出"miss"的个数',$user_data["statistics"]["count_miss"]);
+		item("supporter等级",$user_data["support_level"]);
 
 
 
@@ -109,8 +102,8 @@ $data = make_req("/users/" . $user);
      </thead>
      </tbody>
 	<?php
-		item("头像",$data["avatar_url"],"image");
-		item("横幅",$data["cover_url"],"image");
+		item("头像",$user_data["avatar_url"],"image");
+		item("横幅",$user_data["cover_url"],"image");
 
        ?>
      </tbody>

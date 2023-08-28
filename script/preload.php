@@ -37,4 +37,18 @@ if (!is_dir($cache_path)) {
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "oauth2token.php";
 $access_token = oauth2_token();
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "makereq.php";
+
+// 取得用户数据
+
+if(isset($_GET['user']) && !empty($_GET['user'])) {
+    $user = input_filter($_GET['user']);
+} else {
+    $user = OSU_DEFAULT_USER;
+}
+
+$user_data = make_req("/users/" . $user);
+
+if (array_key_exists("error",$user_data)) {
+die("该用户不存在");
+}
 ?>
