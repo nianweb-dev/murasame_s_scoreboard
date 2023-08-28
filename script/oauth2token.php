@@ -1,7 +1,5 @@
 <?php
-if (!defined(OSU_OAUTH2_CLIENT_ID)) {
-    die("未传递参数");
-}
+function oauth2_token() {
 
 $token_file = $GLOBALS["cache_path"] . DIRECTORY_SEPARATOR . "token";
 $token_ttl_file = $GLOBALS["cache_path"] . DIRECTORY_SEPARATOR . "token.ttl";
@@ -59,5 +57,7 @@ if (file_exists($token_ttl_file)) {
 } else {
     // 如果文件不存在，则重新生成token
 	$access_token = gen_access_token();
+}
+return $access_token;
 }
 ?>

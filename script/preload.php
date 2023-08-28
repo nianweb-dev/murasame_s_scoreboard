@@ -35,5 +35,6 @@ if (!is_dir($cache_path)) {
 
 // 加载其他函数
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "oauth2token.php";
+$access_token = oauth2_token();
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "makereq.php";
 ?>
