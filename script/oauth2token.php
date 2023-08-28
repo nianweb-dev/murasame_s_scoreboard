@@ -1,9 +1,8 @@
 <?php
-function oauth2_token() {
-
 $token_file = $GLOBALS["cache_path"] . DIRECTORY_SEPARATOR . "token";
 $token_ttl_file = $GLOBALS["cache_path"] . DIRECTORY_SEPARATOR . "token.ttl";
 
+function oauth2_token() {
 function gen_access_token() {
 $post_data = array(
     "grant_type" => "client_credentials",
@@ -43,16 +42,16 @@ file_put_contents($GLOBALS["token_ttl_file"], $expires_timestamp);
 return($access_token);
 }
 
-if (file_exists($token_ttl_file)) {
+if (file_exists($GLOBALS["token_ttl_file"])) {
     // 存在，从文件加载时间戳
-    $timestamp = (int) file_get_contents($token_ttl_file);
+    $timestamp = (int) file_get_contents($GLOBALS["token_ttl_file"]);
 	// 检查时间戳是否小于当前时间
 	if ($timestamp < time()) {
         // 执行重新生成token的函数
         $access_token = gen_access_token();
 	} else {
 		// 缓存成功命中
-		$access_token = file_get_contents($token_file); 
+		$access_token = file_get_contents($GLOBALS["token_file"]); 
 	}
 } else {
     // 如果文件不存在，则重新生成token
