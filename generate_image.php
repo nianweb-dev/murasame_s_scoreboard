@@ -203,6 +203,13 @@ $textY = $textY + $Leading;
 $text = "漏击:" . $recent_data[0]["statistics"]["count_miss"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
+if (!empty($recent_data[0]["pp"])) {
+
+$textX = $image_width - 200;
+$text = "PP:" . $recent_data[0]["pp"];
+imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+ 
+}
 
 // 下载最近游玩的谱面的封面图片
 $beatmap_cover_data = file_get_contents($recent_data[0]["beatmapset"]["covers"]["card"]);
