@@ -23,7 +23,7 @@ function convert_timezone($original_time){
 
 
 function input_filter($input) {
-    $filtered_input = preg_replace('/[^a-zA-Z0-9_-]/', '', $input);
+	$filtered_input = preg_replace('/[^a-zA-Z0-9_\-\[\]]/', '', $input);
         return $filtered_input;
 }
 
