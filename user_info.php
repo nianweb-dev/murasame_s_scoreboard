@@ -80,10 +80,10 @@ function item($object,$value,$type="text",$prefix="",$suffix="") {
 		item("成为过supporter",$user_data["has_supported"]);
 		item("最大好友数",$user_data["max_friends"]);
 	//	item("个人页面(原始数据)",$user_data["page"]["raw"]);
-		item('总计打出"300"的个数',$user_data["statistics"]["count_300"]);
-		item('总计打出"100"的个数',$user_data["statistics"]["count_100"]);
-		item('总计打出"50"的个数',$user_data["statistics"]["count_50"]);
-		item('总计打出"miss"的个数',$user_data["statistics"]["count_miss"]);
+		item('总计打出"300"的次数',$user_data["statistics"]["count_300"]);
+		item('总计打出"100"的次数',$user_data["statistics"]["count_100"]);
+		item('总计打出"50"的次数',$user_data["statistics"]["count_50"]);
+		item('总计打出"miss"的次数',$user_data["statistics"]["count_miss"]);
 		item("supporter等级",$user_data["support_level"]);
 
 
