@@ -27,7 +27,5 @@ define("IMAGE_TEXT_LEADING", 30);
 // 设置默认时区
 date_default_timezone_set('Asia/Shanghai');
 
-// 默认缓存目录将使用php默认目录
-$sys_cache_path = sys_get_temp_dir();
 ?>
 

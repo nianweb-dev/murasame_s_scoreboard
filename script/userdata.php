@@ -1,7 +1,9 @@
 <?php
-class UserData {
+class UserData
+{
     var $raw_json_data;
-    function __construct($access_token,$user,$mode = "osu"){
+    function __construct($access_token, $user, $mode = "osu")
+    {
         $headers = array(
             "Accept: application/json",
             "Content-Type: application/json",
@@ -9,9 +11,9 @@ class UserData {
         );
 
         $request = curl_init();
-            curl_setopt($request, CURLOPT_URL,  OSU_API_EDNPOINT . "/users/" . $user . "/" . $mode);
-            curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($request, CURLOPT_URL,  OSU_API_EDNPOINT . "/users/" . $user . "/" . $mode);
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($request);
 
         curl_close($request);
@@ -20,14 +22,17 @@ class UserData {
         $this->raw_json_data = $response_json_data;
     }
 
-    public function get_raw_json_data() {
+    public function get_raw_json_data()
+    {
         return $this->raw_json_data;
     }
 }
 
-class UserRecentScoresData {
+class UserRecentScoresData
+{
     var $raw_json_data;
-    function __construct($access_token,$user_id,$mode = "osu",$limit = "1"){
+    function __construct($access_token, $user_id, $mode = "osu", $limit = "1")
+    {
         $headers = array(
             "Accept: application/json",
             "Content-Type: application/json",
@@ -38,9 +43,9 @@ class UserRecentScoresData {
             "limit" => $limit
         );
         $request = curl_init();
-            curl_setopt($request, CURLOPT_URL,  OSU_API_EDNPOINT . "/users/" . $user_id . "/scores/recent" . "?" . http_build_query($query));
-            curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($request, CURLOPT_URL,  OSU_API_EDNPOINT . "/users/" . $user_id . "/scores/recent" . "?" . http_build_query($query));
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($request);
 
         curl_close($request);
@@ -49,8 +54,8 @@ class UserRecentScoresData {
         $this->raw_json_data = $response_json_data;
     }
 
-    public function get_raw_json_data() {
+    public function get_raw_json_data()
+    {
         return $this->raw_json_data;
     }
 }
-?>

@@ -70,10 +70,10 @@ $text = "全球排名:" . $user_data["statistics"]["global_rank"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 // 某些用户没有地区排名 
-if (isset($user_data["statistics"]["country_rank"])){
-$textY = $textY + $Leading;
-$text = "地区排名:" . $user_data["statistics"]["country_rank"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+if (isset($user_data["statistics"]["country_rank"])) {
+    $textY = $textY + $Leading;
+    $text = "地区排名:" . $user_data["statistics"]["country_rank"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 }
 
 $textY = $textY + $Leading;
@@ -137,7 +137,7 @@ $text = "UID:" . $user_data["id"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 // 最近游玩数据
-$new_recent_data = new UserRecentScoresData($access_token,$user_data["id"]);
+$new_recent_data = new UserRecentScoresData($access_token, $user_data["id"]);
 
 $recent_data = $new_recent_data->get_raw_json_data();
 
@@ -148,90 +148,88 @@ if (empty($recent_data)) {
     imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 } else {
 
-// Free zone
+    // Free zone
 
-$textX = 10;
-$textY = 390;
-$text = "最近游玩:" . $recent_data[0]["beatmapset"]["title_unicode"] . " / " . $recent_data[0]["beatmap"]["version"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    $textX = 10;
+    $textY = 390;
+    $text = "最近游玩:" . $recent_data[0]["beatmapset"]["title_unicode"] . " / " . $recent_data[0]["beatmap"]["version"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-// C zone
+    // C zone
 
-$textX = $zone_c_X;
+    $textX = $zone_c_X;
 
-$textY = 420;
-$text = "成绩评级:" . $recent_data[0]["rank"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
-
-
-$textY = $textY + $Leading;
-$text = "最大连击:" . $recent_data[0]["max_combo"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    $textY = 420;
+    $text = "成绩评级:" . $recent_data[0]["rank"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 
-$textY = $textY + $Leading;
-$text = "300:" . $recent_data[0]["statistics"]["count_300"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
-
-$textY = $textY + $Leading;
-$text = "100:" . $recent_data[0]["statistics"]["count_100"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
-
-$textY = $textY + $Leading;
-$text = "50:" . $recent_data[0]["statistics"]["count_50"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    $textY = $textY + $Leading;
+    $text = "最大连击:" . $recent_data[0]["max_combo"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 
-// D zone
-//
-$textX = $zone_d_X;
+    $textY = $textY + $Leading;
+    $text = "300:" . $recent_data[0]["statistics"]["count_300"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-$textY = 420;
+    $textY = $textY + $Leading;
+    $text = "100:" . $recent_data[0]["statistics"]["count_100"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-$text = "完成时间:" . convert_timezone($recent_data[0]["created_at"]);
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    $textY = $textY + $Leading;
+    $text = "50:" . $recent_data[0]["statistics"]["count_50"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-$textY = $textY + $Leading;
-$text = "得分:" . $recent_data[0]["score"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-if (isset($recent_data[0]["statistics"]["count_geki"])) {
-$textY =$textY + $Leading;
-$text = "激:" . $recent_data[0]["statistics"]["count_geki"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
-}
+    // D zone
+    //
+    $textX = $zone_d_X;
 
-if (isset($recent_data[0]["statistics"]["count_katu"])){
-$textY = $textY + $Leading;
-$text = "喝:" . $recent_data[0]["statistics"]["count_katu"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
-}
+    $textY = 420;
 
-$textY = $textY + $Leading;
-$text = "漏击:" . $recent_data[0]["statistics"]["count_miss"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    $text = "完成时间:" . convert_timezone($recent_data[0]["created_at"]);
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-if (!empty($recent_data[0]["pp"])) {
+    $textY = $textY + $Leading;
+    $text = "得分:" . $recent_data[0]["score"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-$textX = $image_width - 200;
-$text = "PP:" . $recent_data[0]["pp"];
-imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
- 
-}
+    if (isset($recent_data[0]["statistics"]["count_geki"])) {
+        $textY = $textY + $Leading;
+        $text = "激:" . $recent_data[0]["statistics"]["count_geki"];
+        imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    }
 
-// 下载最近游玩的谱面的封面图片
+    if (isset($recent_data[0]["statistics"]["count_katu"])) {
+        $textY = $textY + $Leading;
+        $text = "喝:" . $recent_data[0]["statistics"]["count_katu"];
+        imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    }
 
-$beatmap_cover_data = file_get_contents($recent_data[0]["beatmapset"]["covers"]["card"]);
+    $textY = $textY + $Leading;
+    $text = "漏击:" . $recent_data[0]["statistics"]["count_miss"];
+    imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
-// 加载图片
-$recent_beatmap_cover = imagecreatefromstring($beatmap_cover_data);
+    if (!empty($recent_data[0]["pp"])) {
 
-$imageX = 10;
-$imageY = $image_hight - 190;
-imagecopy($image, $recent_beatmap_cover, $imageX, $imageY, 0, 0, 160, 120);
+        $textX = $image_width - 200;
+        $text = "PP:" . $recent_data[0]["pp"];
+        imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+    }
 
-imagedestroy($recent_beatmap_cover);
+    // 下载最近游玩的谱面的封面图片
 
+    $beatmap_cover_data = file_get_contents($recent_data[0]["beatmapset"]["covers"]["card"]);
+
+    // 加载图片
+    $recent_beatmap_cover = imagecreatefromstring($beatmap_cover_data);
+
+    $imageX = 10;
+    $imageY = $image_hight - 190;
+    imagecopy($image, $recent_beatmap_cover, $imageX, $imageY, 0, 0, 160, 120);
+
+    imagedestroy($recent_beatmap_cover);
 }
 
 // 设置 HTTP 标头以输出图像
@@ -247,5 +245,3 @@ imagepng($image);
 
 // 释放图像资源
 imagedestroy($image);
-?>
-
