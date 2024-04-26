@@ -69,9 +69,12 @@ $textY = $textY + $Leading;
 $text = "全球排名:" . $user_data["statistics"]["global_rank"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
+// 某些用户没有地区排名 
+if (isset($user_data["statistics"]["country_rank"])){
 $textY = $textY + $Leading;
 $text = "地区排名:" . $user_data["statistics"]["country_rank"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+}
 
 $textY = $textY + $Leading;
 $text = "PP:" . $user_data["statistics"]["pp"];
@@ -134,8 +137,9 @@ $text = "UID:" . $user_data["id"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
 // 最近游玩数据
+$new_recent_data = new UserRecentScoresData($access_token,$user_data["id"]);
 
-$recent_data = make_req("/users/" . $user_data["id"] . "/scores/recent?limit=1");
+$recent_data = $new_recent_data->get_raw_json_data();
 
 if (empty($recent_data)) {
     $textX = 270;
@@ -191,13 +195,17 @@ $textY = $textY + $Leading;
 $text = "得分:" . $recent_data[0]["score"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
 
+if (isset($recent_data[0]["statistics"]["count_geki"])) {
 $textY =$textY + $Leading;
 $text = "激:" . $recent_data[0]["statistics"]["count_geki"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+}
 
+if (isset($recent_data[0]["statistics"]["count_katu"])){
 $textY = $textY + $Leading;
 $text = "喝:" . $recent_data[0]["statistics"]["count_katu"];
 imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_color, IMAGE_TEXT_DEFAULT_FONT, $text);
+}
 
 $textY = $textY + $Leading;
 $text = "漏击:" . $recent_data[0]["statistics"]["count_miss"];
@@ -212,6 +220,7 @@ imagettftext($image, IMAGE_TEXT_DEFAULT_FONT_SIZE, 0, $textX, $textY, $text_colo
 }
 
 // 下载最近游玩的谱面的封面图片
+
 $beatmap_cover_data = file_get_contents($recent_data[0]["beatmapset"]["covers"]["card"]);
 
 // 加载图片
