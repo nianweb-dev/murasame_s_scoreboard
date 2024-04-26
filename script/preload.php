@@ -6,7 +6,7 @@ if (empty(OSU_OAUTH2_CLIENT_ID) || empty(OSU_OAUTH2_CLIENT_SECRET)) {
 }
 
 if (!extension_loaded("gd") || !extension_loaded("curl")) {
-	die("程序依赖的全部php扩展未安装或者未加载");
+	die("程序依赖的全部php扩展未安装或者未加载。\r\n此程序需要安装并使用gd和curl扩展。");
 }
 
 function convert_timezone($original_time){
@@ -33,10 +33,9 @@ if (!is_dir($cache_path)) {
 	mkdir($cache_path);
 }
 
-// 加载其他函数
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "oauth2token.php";
-$access_token = oauth2_token();
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "makereq.php";
+// 加载其他组件
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "oauth2token.php";;
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "userdata.php";
 
 // 取得用户数据
 
@@ -46,9 +45,17 @@ if(isset($_GET['user']) && !empty($_GET['user'])) {
     $user = OSU_DEFAULT_USER;
 }
 
-$user_data = make_req("/users/" . $user);
+// 首先应该生成令牌
+
+$new_access_token = new Authorization_Code_Grant;
+
+$access_token = $new_access_token->get_access_token();
+
+$new_user_data = new UserData($access_token,$user);
+
+$user_data = $new_user_data->get_raw_json_data();
 
 if (array_key_exists("error",$user_data)) {
-die("该用户不存在");
-}
+	die("找不到指定的用户！");
+	}
 ?>
