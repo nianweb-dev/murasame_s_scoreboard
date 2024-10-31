@@ -1,5 +1,22 @@
 <?php
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . "script" . DIRECTORY_SEPARATOR . "preload.php";
+if (isset($_GET["username"])){
+  $username = input_filter($_GET["username"]);
+} else { 
+  $username = "Murasame_sama";
+}
+
+if (isset($_GET["mode"])){
+  $mode = input_filter($_GET["mode"]);
+} else { 
+  $mode = "osu";
+}
+
+$endpoint = "/users/" . $username . "/" . $mode;
+$guest_session_start = new Guest_Session;
+$guest_session = $guest_session_start->session_data();
+$query_playerdata = new Access_API($endpoint, $guest_session["access_token"], $guest_session["token_type"]);
+$user_data = $query_playerdata->response_data();
 
 function item($object, $value, $type = "text", $prefix = "", $suffix = "")
 {
@@ -12,7 +29,7 @@ function item($object, $value, $type = "text", $prefix = "", $suffix = "")
         print("<tr><td>" . $object . "</td><td>" . '<a href="' . $value . '">' . $value . '</a>' . "</td></tr>");
         break;
       case "image":
-        print("<tr><td>" . $object . "</td><td>" . '<a href="' . $value . '"><mdui-card><img src="' . $value . '" alt="' . $object . '" class="mdui-img-fluid"></img></mdui-card></a>' . "</td></tr>");
+        print("<tr><td>" . $object . "</td><td>" . '<a href="' . $value . '"><img src="' . $value . '" alt="' . $object . '" class="mdui-img-fluid"></img></a>' . "</td></tr>");
         break;
     }
   }
@@ -27,15 +44,28 @@ function item($object, $value, $type = "text", $prefix = "", $suffix = "")
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
   <meta name="renderer" content="webkit" />
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.cn/icon?family=Material+Icons">
+  <style>
+    img {
+      max-width : 100%;
+    }
+  </style>
   <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
   <title><?php print($user_data["username"] . "的详细信息"); ?></title>
 </head>
 
 <body>
   <mdui-layout>
-    <mdui-top-app-bar>
-      <mdui-top-app-bar-title><?php print($user_data["username"] . "的详细信息"); ?></mdui-top-app-bar-title>
+    <!-- 顶部应用栏-->
+    <mdui-top-app-bar id=bar>
+      <mdui-top-app-bar-title id=title><?php print($user_data["username"] . "的详细信息"); ?></mdui-top-app-bar-title>
+      <div style="flex-grow: 1"></div>
+      <mdui-tooltip content="点击以切换用户！">
+        <mdui-avatar src="<?php print($user_data["avatar_url"]); ?>"></mdui-avatar>
+      </mdui-tooltip>
+
     </mdui-top-app-bar>
+    <!-- 顶部应用栏-->
     <mdui-layout-main>
       <p>一般信息</p>
       <div class="mdui-table">
@@ -97,7 +127,6 @@ function item($object, $value, $type = "text", $prefix = "", $suffix = "")
           <?php
           item("头像", $user_data["avatar_url"], "image");
           item("横幅", $user_data["cover_url"], "image");
-
           ?>
           </tbody>
         </table>
