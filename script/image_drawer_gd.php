@@ -62,11 +62,10 @@ class Draw_Player_Image
         //imagecopy($image, $avatar, 0, 0, 0, 0, 350, 350);
 
         // 从远程加载并绘制头像
-        // 下载图片
-        $avatar_data = file_get_contents($user_data["avatar_url"]);
-
-        // 加载图片
-        $avatar = imagecreatefromstring($avatar_data);
+        $request = curl_init($user_data["avatar_url"]);
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+        $avatar = imagecreatefromstring(curl_exec($request));
+        curl_close($request);
 
         // 从远程获取的图像并不一定是350x350
         // 所以这里先进行拉伸再执行imagecopy()
@@ -178,11 +177,10 @@ class Draw_Player_Image
             }
 
             // 下载最近游玩的谱面的封面图片
-
-            $beatmap_cover_data = file_get_contents($recent_data[0]["beatmapset"]["covers"]["card"]);
-
-            // 加载图片
-            $recent_beatmap_cover = imagecreatefromstring($beatmap_cover_data);
+            $request = curl_init($recent_data[0]["beatmapset"]["covers"]["card"]);
+            curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+            $recent_beatmap_cover = imagecreatefromstring(curl_exec($request));
+            curl_close($request);
 
             $imageX = 10;
             $imageY = $image_hight - 190;
